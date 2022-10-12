@@ -1,0 +1,20 @@
+{
+    "name": "cours/fortube",
+    "description": "clone of youtube for training",
+    "type": "project",
+    "autoload": {
+        "psr-4": {
+            "App\\Model\\Entity": "src/Model/Entity",
+            "App\\Model\\Manager": "src/Model/Manager",
+            "App\\Controller": "src/Controller"
+        }
+    },
+    "authors": [
+        {
+            "name": "Amaranth01",
+            "email": "vanessa.nectoux@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {}
+}
