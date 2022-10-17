@@ -49,7 +49,7 @@ class Routing {
      */
     private static function guessController(string $controller)
     {
-        $controller = "App\src\Controller\\" . ucfirst($controller) . 'Controller';
+        $controller = "App\Controller\\" . ucfirst($controller) . 'Controller';
         if (class_exists($controller)) {
             return new $controller();
         }

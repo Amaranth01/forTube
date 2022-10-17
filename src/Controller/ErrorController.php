@@ -11,5 +11,6 @@ class ErrorController extends AbstractController
 
     public function error404()
     {
+        $this->index();
     }
 }
