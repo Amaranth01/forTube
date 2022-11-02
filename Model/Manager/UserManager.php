@@ -2,7 +2,7 @@
 
 namespace App\Model\Manager;
 
-class userManager
+class UserManager
 {
 
 }
