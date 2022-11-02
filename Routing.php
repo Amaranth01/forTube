@@ -2,8 +2,8 @@
 
 namespace App;
 
-use App\src\Controller\ErrorController;
-use App\src\Controller\AbstractController;
+use App\Controller\AbstractController;
+use App\Controller\ErrorController;
 
 class Routing {
 

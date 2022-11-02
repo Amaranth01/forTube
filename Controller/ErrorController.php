@@ -1,12 +1,12 @@
 <?php
 
-namespace App\src\Controller;
+namespace App\Controller;
 
 class ErrorController extends AbstractController
 {
     public function index()
     {
-        $this->render('error/404');
+        $this->render('error');
     }
 
     public function error404()

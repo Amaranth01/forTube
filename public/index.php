@@ -2,11 +2,6 @@
 
 use App\Routing;
 
-require __DIR__ . '/../vendor/autoload.php';
-require __DIR__ . '/../Routing.php';
-require __DIR__ . '/../src/Model/DB.php';
-require __DIR__ . '/../Config.php';
-
-session_start();
+require __DIR__ . '/../include.php';
 
 Routing::route();
