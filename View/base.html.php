@@ -36,24 +36,30 @@ if (isset($_SESSION['success'])) {
 ?>
     <h1 id="TitleSite">ForTube</h1>
 
-    <div>
-        <label for="search"></label>
-        <input type="search" id="search" name="search" placeholder="rechercher">
+        <div>
+            <label for="search"></label>
+            <input type="search" id="search" name="search" placeholder="rechercher">
 
-        <img src="" alt="">
-    </div>
-    
+            <img src="" alt="">
+        </div>
 
-    <div id="category">
-        <p>Catégories :</p>
-        <ul>
-           <li>Tous</li>
-            <li>Jeux vidéos</li>
-            <li>Animaux</li>
-            <li>Musique</li>
-            <li>Vie locale</li>
-        </ul>
-    </div>
+
+        <div id="category">
+            <p>Catégories :</p>
+            <ul>
+               <li>Tous</li>
+                <li>Jeux vidéos</li>
+                <li>Animaux</li>
+                <li>Musique</li>
+                <li>Vie locale</li>
+            </ul>
+        </div>
+
+        <div>
+            <a href="/index.php?c=home&a=connexion">Connexion</a>
+        </div>
+
+
 
 <main class="container">
     <?= $html ?>

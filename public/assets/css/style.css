@@ -7,3 +7,7 @@
 html {
     font-size: 65.5%;
 }
+
+#content {
+    background-color: red;
+}
