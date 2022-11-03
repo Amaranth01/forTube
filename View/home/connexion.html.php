@@ -16,8 +16,7 @@
 
     <div>
         <p class="account">Pas de compte ? Créez-en un gratuitement !
-            <a href="/index.php?c=home&a=login" class="createAccount">
-                Créer un compte</a>
+            <a href="/index.php?c=home&a=login">  Créer un compte</a>
         </p>
 
         <p id="forgot">

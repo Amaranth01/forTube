@@ -7,6 +7,6 @@ class UserController extends AbstractController
 
     public function index()
     {
-        // TODO: Implement index() method.
+        // TODO: Implement index() method (space user).
     }
 }
