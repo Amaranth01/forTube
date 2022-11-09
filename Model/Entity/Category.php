@@ -16,10 +16,12 @@ class Category extends AbstractEntity
 
     /**
      * @param string $categoryName
+     * @return Category
      */
-    public function setCategoryName(string $categoryName): void
+    public function setCategoryName(string $categoryName): self
     {
         $this->categoryName = $categoryName;
+        return $this;
     }
 
 
