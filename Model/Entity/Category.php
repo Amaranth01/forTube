@@ -4,25 +4,25 @@ namespace App\Model\Entity;
 
 class Category extends AbstractEntity
 {
-    private string $name;
+    private string $categoryName;
 
     /**
      * @return string
      */
-    public function getName(): string
+    public function getCategoryName(): string
     {
-        return $this->name;
+        return $this->categoryName;
     }
 
     /**
-     * @param string $name
-     * @return Category
+     * @param string $categoryName
      */
-    public function setName(string $name): self
+    public function setCategoryName(string $categoryName): void
     {
-        $this->name = $name;
-        return $this;
+        $this->categoryName = $categoryName;
     }
+
+
 
 
 }
