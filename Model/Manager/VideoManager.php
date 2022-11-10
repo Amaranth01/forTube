@@ -108,7 +108,7 @@ class VideoManager
      * @param int $offset
      * @return array
      */
-    public static function getArticleByCategoryId(int $id, int $limit = 0, int $offset = 0 ): array
+    public static function getVideoByCategoryId(int $id, int $limit = 0, int $offset = 0 ): array
     {
         $article = [];
         if ($limit === 14) {

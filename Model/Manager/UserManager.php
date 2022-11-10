@@ -20,7 +20,6 @@ class UserManager
             ->setUsername($data['username'])
             ->setEmail($data['email'])
             ->setPassword($data['password'])
-            ->setToken($data['token'])
             ->setRole($role)
             ;
     }
@@ -92,14 +91,13 @@ class UserManager
     public static function addUser(User $user): bool
     {
         $stmt = DB::getPDO()->prepare("
-            INSERT INTO user (username, email, password, token, role_id)
-            VALUES (:username, :email, :password,  :token, :role_id) 
+            INSERT INTO user (username, email, password , role_id)
+            VALUES (:username, :email, :password, :role_id) 
         ");
 
         $stmt->bindValue(':username', $user->getUsername());
         $stmt->bindValue(':email', $user->getEmail());
         $stmt->bindValue(':password', $user->getPassword());
-        $stmt->bindValue(':token', $user->getToken());
         $stmt->bindValue(':role_id', $user->getRole()->getId());
 
         $stmt = $stmt->execute();

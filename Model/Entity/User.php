@@ -65,24 +65,6 @@ class User extends AbstractEntity
     }
 
     /**
-     * @return string
-     */
-    public function getToken(): string
-    {
-        return $this->token;
-    }
-
-    /**
-     * @param string $token
-     * @return User
-     */
-    public function setToken(string $token): self
-    {
-        $this->token = $token;
-        return $this;
-    }
-
-    /**
      * @return Role
      */
     public function getRole(): Role
