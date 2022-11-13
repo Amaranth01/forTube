@@ -52,11 +52,13 @@ if (isset($_SESSION['success'])) {
                 <li>Animaux</li>
                 <li>Musique</li>
                 <li>Vie locale</li>
+                <li>Manga / animé</li>
             </ul>
         </div>
 
         <div>
             <a href="/index.php?c=home&a=connexion">Connexion</a>
+            <a href="/index.php?c=user&a=user-space">Espace personnel</a>
         </div>
 
 

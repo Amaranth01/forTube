@@ -20,6 +20,10 @@ class UserController extends AbstractController
         ]);
     }
 
+    public function userSpace() {
+        $this->render('user/userSpace');
+    }
+
     /**
      * Add user and secured the form
      */

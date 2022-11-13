@@ -16,16 +16,18 @@ class VideoController extends AbstractController
         $this->render('video/uploadVideo');
     }
 
+    public function uploadVideo() {
+        $this->render('video/uploadVideo');
+    }
+
     /**
      * Add an article
      */
-    public function addArticle()
+    public function addVideo()
     {
         //Retrieves and cleans form fields
         $title = $this->clean($this->getFormField('title'));
-        $description = $this->clean($this->getFormField('resume'));
-        //Cleans the field and allows some tags
-        $content = html_entity_decode(strip_tags($_POST['content'],'<div><p><img><h1><h2><h3><h4><h5><br><span><strong><a><em>'));
+        $description = $this->clean($this->getFormField('description'));
 
         //Checking if the writer is logged in
         $user = self::getConnectedUser();
@@ -33,7 +35,7 @@ class VideoController extends AbstractController
         //Creating a new article object
         $article = (new Video())
             ->setTitle($title)
-            ->setContent($content)
+            ->setContent($this->addVideoContent())
             ->setDescription($description)
             ->setImage($this->addImage())
             ->setUser($user)
@@ -45,8 +47,51 @@ class VideoController extends AbstractController
         //Get categories and articles for sorting
         CategoryManager::getAllCategories();
 
-        //Redirection to the writer's area
-        $this->render('writer/writer');
+        //Redirection to user space
+        $this->render('user/userSpace');
+    }
+
+    /**
+     * Add an image for an article
+     * @return string
+     */
+    public function addVideoContent(): string
+    {
+        $name = "";
+        $error = [];
+        //Checking the presence of the form field
+        if(isset($_FILES['video']) && $_FILES['video']['error'] === 0){
+
+            //Defining allowed file types for the secured
+            $allowedMimeTypes = ['video/MP4', 'video/MOV', 'video/AVI'];
+
+            if(in_array($_FILES['video']['type'], $allowedMimeTypes)) {
+                //Setting the maximum size
+                if ((int)$_FILES['img']['size'] ) {
+                    //Get the temporary file name
+                    $tmp_name = $_FILES['video']['tmp_name'];
+                    //Assignment of the final name
+                    $name = $this->getRandomName($_FILES['video']['name']);
+
+                    //Checks if the destination file exists, otherwise it is created
+                    if(!is_dir('uploads')){
+                        mkdir('uploads');
+                    }
+                    //File move
+                    move_uploaded_file($tmp_name,'../public/uploads/' . $name);
+                }
+            }
+            else {
+                $_SESSION['errors'] = "Mauvais type de fichier. Seul les formats MP4, MOV et AVI sont acceptés";
+                $this->render('user/userSpace');
+            }
+        }
+        else {
+            $_SESSION['errors'] = "Une erreur s'est produite";
+            $this->render('user/userSpace');
+        }
+        $_SESSION['error'] = $error;
+        return $name;
     }
 
     /**
@@ -81,17 +126,17 @@ class VideoController extends AbstractController
                 }
                 else {
                     $_SESSION['errors'] =  "Le poids est trop lourd, maximum autorisé : 1 Mo";
-                    $this->render('writer/writer');
+                    $this->render('user/UserSpace');
                 }
             }
             else {
                 $_SESSION['errors'] = "Mauvais type de fichier. Seul les formats JPG, JPEG et PNG sont acceptés";
-                $this->render('writer/writer');
+                $this->render('user/UserSpace');
             }
         }
         else {
             $_SESSION['errors'] = "Une erreur s'est produite";
-            $this->render('writer/writer');
+            $this->render('user/UserSpace');
         }
         $_SESSION['error'] = $error;
         return $name;
@@ -121,13 +166,13 @@ class VideoController extends AbstractController
     /**
      * @param $id
      */
-    public function editArticle($id)
+    public function editVideo($id)
     {
         //Checks if the writer is logged in
         if(!self::userConnected()){
             $_SESSION['errors'] = "Veuillez vous connecter pour poster une video";
             $this->render('home/index', [
-                'article' => VideoManager::findVideo(4),
+                'video' => VideoManager::findVideo(4),
                 'sectionTwo' => VideoManager::getVideoByCategoryId(2),
                 'sectionFive' => VideoManager::getVideoByCategoryId(5),
             ]);
@@ -136,7 +181,7 @@ class VideoController extends AbstractController
         //Checks if the title and content fields are present
         if(!isset($_POST['title'])&& !isset($_POST['content'])) {
             $this->render('home/index', [
-                'article' => VideoManager::findVideo(4),
+                'video' => VideoManager::findVideo(4),
                 'sectionTwo' => VideoManager::getVideoByCategoryId(2),
                 'sectionFive' => VideoManager::getVideoByCategoryId(5),
             ]);
@@ -146,11 +191,43 @@ class VideoController extends AbstractController
         $newContent = strip_tags($_POST['content'],
             '<div><p><img><h1><h2><h3><h4><h5><br><span><strong><a><em>');
         //Manager recovery
-        $article= new VideoManager($newTitle, $newContent, $id);
-        $article->updateVideo($newTitle, $newContent, $id);
+        $video= new VideoManager($newTitle, $newContent, $id);
+        $video->updateVideo($newTitle, $newContent, $id);
         //Redirects to the writers page
         self::index();
     }
 
+    /**
+     * @param int $id
+     */
+    public function deleteArticle(int $id)
+    {
+        //Verify if a user is connected
+        if(!isset($_SESSION['user'])) {
+            $_SESSION['errors'] = "Seul un rédacteur peut supprimer un article";
+            $this->render('home/index', [
+                'video' => VideoManager::findVideo(),
+                'sectionTwo' => VideoManager::getVideoByCategoryId(2),
+                'sectionFive' => VideoManager::getVideoByCategoryId(5),
+            ]);
+        }
+        //verify who is connected
+        if($_SESSION['user']->getRole()->getRoleName() === 'user') {
+            $_SESSION['errors'] = "Seul l'utilisateur propriétaire de la video peut la supprimer";
+            $this->render('home/index', [
+                'video' => VideoManager::findVideo(),
+                'sectionTwo' => VideoManager::getVideoByCategoryId(2),
+                'sectionFive' => VideoManager::getVideoByCategoryId(5),
+            ]);
+        }
+        if (self::userConnected()) {
+            //Check that the video exists
+            if(VideoManager::VideoExist($id)) {
+                $video = VideoManager::getVideo($id);
+                $deleted = VideoManager::deleteVideo($video);
+                $this->render('writer/writer');
+            }
+        }
+    }
 
 }

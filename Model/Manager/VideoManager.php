@@ -154,7 +154,7 @@ class VideoManager
      * @param Video $article
      * @return false|int
      */
-    public static function deleteArticle(Video $article): bool
+    public static function deleteVideo(Video $article): bool
     {
         //Check if the article exist
         if (self::videoExist($article->getId())) {

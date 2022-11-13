@@ -4,7 +4,7 @@
 
 <div>
     <h3>Vos vidéos</h3>
-    <p><a href="">Upload de nouvelles vidéos</a></p>
+    <p><a href="/index.php?c=video&a=upload-video">Upload de nouvelles vidéos</a></p>
     <p>
 <!--        Mettre les 15 dernières vidéos postées puis partir sur du paging-->
     </p>
