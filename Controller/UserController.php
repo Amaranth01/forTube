@@ -85,7 +85,7 @@ class UserController extends AbstractController
             } else {
                 //If no error is detected the program goes to else and authorizes the recording
                 $user = new User();
-                $role = RoleManager::getRoleByName('none');
+                $role = RoleManager::getRoleByName('user');
                 $user
                     ->setUsername($username)
                     ->setEmail($mail)

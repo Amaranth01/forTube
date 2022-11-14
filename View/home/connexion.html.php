@@ -1,7 +1,7 @@
 <h1>Connectez-vous</h1>
 
     <div>
-        <form action="" method="post">
+        <form action="/index.php?c=user&a=connexion" method="post">
             <div>
                 <label for="username">Votre pseudo</label>
                 <input type="text" name="username" id="username">

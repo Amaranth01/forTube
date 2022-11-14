@@ -67,25 +67,25 @@ class VideoManager
 
     /**
      * Add an article to the DB
-     * @param Video $article
+     * @param Video $video
      * @return bool
      */
-    public static function addArticle(Video $article): bool {
+    public static function addVideo(Video $video): bool {
         $stmt= DB::getPDO()->prepare("
-            INSERT INTO video (title, content, resume, image, user_id, category_id, date) 
-            VALUES (:title, :content, :resume, :image, :user_id, :category_id, :date )
+            INSERT INTO video (title, video, description, image, user_id, category_id, date) 
+            VALUES (:title, :video, :description, :image, :user_id, :category_id, :date )
         ");
 
-        $stmt->bindValue(':title', $article->getTitle());
-        $stmt->bindValue(':content', $article->getContent());
-        $stmt->bindValue(':resume', $article->getDescription());
-        $stmt->bindValue(':image', $article->getImage());
-        $stmt->bindValue(':user_id', $article->getUser()->getId());
-        $stmt->bindValue(':section_id', $article->getCategory()->getId());
+        $stmt->bindValue(':title', $video->getTitle());
+        $stmt->bindValue(':video', $video->getContent());
+        $stmt->bindValue(':description', $video->getDescription());
+        $stmt->bindValue(':image', $video->getImage());
+        $stmt->bindValue(':user_id', $video->getUser()->getId());
+        $stmt->bindValue(':category_id', $video->getCategory()->getId());
         $stmt->bindValue(':date', (new DateTime())->format('Y-m-d H:i:s'));
 
         $result = $stmt->execute();
-        $article->setID(DB::getPDO()->lastInsertId());
+        $video->setID(DB::getPDO()->lastInsertId());
 
         return $result;
     }

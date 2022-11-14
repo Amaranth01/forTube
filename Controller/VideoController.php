@@ -28,24 +28,23 @@ class VideoController extends AbstractController
         //Retrieves and cleans form fields
         $title = $this->clean($this->getFormField('title'));
         $description = $this->clean($this->getFormField('description'));
+        $category = CategoryManager::getAllCategoriesByName($_POST['category']);
 
         //Checking if the writer is logged in
         $user = self::getConnectedUser();
 
         //Creating a new article object
-        $article = (new Video())
+        $video = (new Video())
             ->setTitle($title)
             ->setContent($this->addVideoContent())
             ->setDescription($description)
             ->setImage($this->addImage())
             ->setUser($user)
+            ->setCategory($category)
         ;
 
         //Add the article
-        VideoManager::addArticle($article);
-
-        //Get categories and articles for sorting
-        CategoryManager::getAllCategories();
+        VideoManager::addVideo($video);
 
         //Redirection to user space
         $this->render('user/userSpace');
@@ -63,11 +62,11 @@ class VideoController extends AbstractController
         if(isset($_FILES['video']) && $_FILES['video']['error'] === 0){
 
             //Defining allowed file types for the secured
-            $allowedMimeTypes = ['video/MP4', 'video/MOV', 'video/AVI'];
+            $allowedMimeTypes = ['video/mp4', 'video/mov', 'video/avi', 'video/webm'];
 
             if(in_array($_FILES['video']['type'], $allowedMimeTypes)) {
                 //Setting the maximum size
-                if ((int)$_FILES['img']['size'] ) {
+                if ((int)$_FILES['video']['size'] ) {
                     //Get the temporary file name
                     $tmp_name = $_FILES['video']['tmp_name'];
                     //Assignment of the final name
@@ -82,7 +81,7 @@ class VideoController extends AbstractController
                 }
             }
             else {
-                $_SESSION['errors'] = "Mauvais type de fichier. Seul les formats MP4, MOV et AVI sont acceptés";
+                $_SESSION['errors'] = "Mauvais type de fichier. Seul les formats MP4, MOV, WEBM et AVI sont acceptés";
                 $this->render('user/userSpace');
             }
         }

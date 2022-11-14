@@ -6,7 +6,7 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>ForTube</title>
-    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="/assets/css/menu.css">
 </head>
 <body>
 <?php
@@ -33,33 +33,31 @@ if (isset($_SESSION['success'])) {
         <?= $success ?>
     </div> <?php
 }
+
+var_dump($_SESSION['user']);
+
 ?>
-    <h1 id="TitleSite">ForTube</h1>
+<div id="menu">
+    <h1 id="titleSite">ForTube</h1>
 
-        <div>
-            <label for="search"></label>
-            <input type="search" id="search" name="search" placeholder="rechercher">
+    <div id="category">
+        <p>Catégories :</p>
+        <ul>
+            <li>Tous</li>
+            <li>Jeux vidéos</li>
+            <li>Animaux</li>
+            <li>Musique</li>
+            <li>Vie locale</li>
+            <li>Manga / animé</li>
+        </ul>
+    </div>
 
-            <img src="" alt="">
-        </div>
+    <div>
+        <a href="/index.php?c=home&a=connexion">Connexion</a>
+        <a href="/index.php?c=user&a=user-space">Espace personnel</a>
+    </div>
+</div>
 
-
-        <div id="category">
-            <p>Catégories :</p>
-            <ul>
-               <li>Tous</li>
-                <li>Jeux vidéos</li>
-                <li>Animaux</li>
-                <li>Musique</li>
-                <li>Vie locale</li>
-                <li>Manga / animé</li>
-            </ul>
-        </div>
-
-        <div>
-            <a href="/index.php?c=home&a=connexion">Connexion</a>
-            <a href="/index.php?c=user&a=user-space">Espace personnel</a>
-        </div>
 
 
 

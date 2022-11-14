@@ -9,18 +9,20 @@ class CategoryManager
 {
     /**
      * Search the categories for the sort
-     * @return array
+     * @param string $categoryName
+     * @return Category
      */
-    public static function getAllCategories(): array
+    public static function getAllCategoriesByName(string $categoryName): Category
     {
-        $stmt = DB::getPDO()->query("SELECT * FROM category ORDER BY id");
-        $categories = [];
-        foreach ($stmt->fetchAll() as $data) {
-            $categories[] = (new Category())
-                ->setId($data['id'])
-                ->setCategoryName($data['category_name'])
-            ;
+        $category = new Category();
+
+        $stmt = DB::getPDO()->query("SELECT * FROM category WHERE category_name = '".$categoryName."'
+        ");
+        if ($stmt && $categoryData = $stmt->fetch()) {
+            $category->setId($categoryData['id']);
+            $category->setCategoryName($categoryData['category_name']);
         }
-        return $categories;
+
+        return $category;
     }
 }
