@@ -5,7 +5,8 @@ namespace App;
 use App\Controller\AbstractController;
 use App\Controller\ErrorController;
 
-class Routing {
+class Routing
+{
 
     /**
      * @param string $key
@@ -14,7 +15,7 @@ class Routing {
      */
     private static function param(string $key, $default = null): ?string
     {
-        if(isset($_GET[$key])) {
+        if (isset($_GET[$key])) {
             return filter_var($_GET[$key], FILTER_SANITIZE_STRING);
         }
         return $default;
@@ -35,7 +36,7 @@ class Routing {
         }
 
         $action = lcfirst($action);
-        if(method_exists($controller, $action)) {
+        if (method_exists($controller, $action)) {
             return $action;
         }
 
@@ -67,10 +68,9 @@ class Routing {
         $action = self::param('a');
         $controller = self::guessController($paramController);
         $id = self::param('id');
-        $token = self::param('token');
 
         //Returns the error page if the controller is not found, and we quit the script
-        if($controller instanceof ErrorController) {
+        if ($controller instanceof ErrorController) {
             $controller->error404();
             exit();
         }
@@ -78,21 +78,13 @@ class Routing {
         //Verification of the presence of controller
         $action = self::guessMethod($controller, $action);
         //Checks if a controller id is needed
-        if($action !== null) {
+        if ($action !== null) {
             if ($id !== null) {
-                if($token !== null) {
-                    $controller->$action($id, $token);
-                }
-                else {
-                    $controller->$action($id);
-                }
-            }
-            else {
+                $controller->$action($id);
+            } else {
                 $controller->$action();
-
             }
-        }
-        else {
+        } else {
             $controller->index();
         }
     }

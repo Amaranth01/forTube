@@ -21,7 +21,7 @@ class VideoManager
             $video[] = (new Video())
                 ->setId($videoData['id'])
                 ->setTitle($videoData['title'])
-                ->setContent($videoData['content'])
+                ->setContent($videoData['video'])
                 ->setDescription($videoData['description'])
                 ->setImage($videoData['image'])
                 ->setDate(DateTime::createFromFormat('Y-m-d H:i:s', $videoData['date']))
@@ -38,7 +38,7 @@ class VideoManager
 
         return (new Video())
             ->setId($id)
-            ->setContent($stmt ['content'])
+            ->setContent($stmt ['video'])
             ->setTitle($stmt['title'])
             ->setImage($stmt['image'])
             ->setDate(DateTime::createFromFormat('Y-m-d H:i:s', $stmt['date']))

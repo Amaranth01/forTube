@@ -5,6 +5,7 @@ namespace App\Controller;
 
 use App\Model\Entity\Video;
 use App\Model\Manager\CategoryManager;
+use App\Model\Manager\CommentManager;
 use App\Model\Manager\VideoManager;
 use Exception;
 
@@ -19,6 +20,14 @@ class VideoController extends AbstractController
     public function uploadVideo() {
         $this->render('video/uploadVideo');
     }
+
+    public function viewVideo($id) {
+        $this->render('video/viewVideo', [
+            'video' => VideoManager::getVideo($id),
+            'comment' => CommentManager::getCommentByArticleId($id),
+        ]);
+    }
+
 
     /**
      * Add an article

@@ -89,7 +89,7 @@ class CommentManager
     public static function getCommentByArticleId($id): array
     {
         $comment = [];
-        $stmt = DB::getPDO()->query("SELECT * FROM comment WHERE article_id = '$id'");
+        $stmt = DB::getPDO()->query("SELECT * FROM comment WHERE video_id = '$id'");
 
         if($stmt) {
             foreach ($stmt->fetchAll() as $data) {
@@ -97,7 +97,7 @@ class CommentManager
                     ->setId($data['id'])
                     ->setContent($data['content'])
                     ->setUser((new UserManager)->getUser($data['user_id']))
-                    ->setVideo(VideoManager::getVideo($data['article_id']))
+                    ->setVideo(VideoManager::getVideo($data['video_id']))
                 ;
             }
         }

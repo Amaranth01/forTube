@@ -41,14 +41,13 @@ var_dump($_SESSION['user']);
     <h1 id="titleSite">ForTube</h1>
 
     <div id="category">
-        <p>Catégories :</p>
         <ul>
-            <li>Tous</li>
-            <li>Jeux vidéos</li>
-            <li>Animaux</li>
-            <li>Musique</li>
-            <li>Vie locale</li>
-            <li>Manga / animé</li>
+            <a href=""><li>Tous</li></a>
+            <a href=""><li>Jeux vidéos</li></a>
+            <a href=""><li>Animaux</li></a>
+            <a href=""><li>Musique</li></a>
+            <a href=""><li>Vie locale</li></a>
+            <a href=""><li>Manga / animé</li></a>
         </ul>
     </div>
 
