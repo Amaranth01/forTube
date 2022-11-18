@@ -1,0 +1,35 @@
+#content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 1.5rem;
+    padding: 0.5rem;
+}
+
+#titleSite > a {
+    color: darkred;
+    font-weight: bold;
+    width: 3.2vw;
+    padding: 0.5rem;
+    font-size: 2rem;
+}
+
+article > a > div> img {
+    width: 23vw;
+}
+
+#contentArticle {
+    border: 2px black solid;
+    padding: 0.5rem;
+    flex-direction: row;
+    width: 25vw;
+}
+
+.videoResume {
+    background-color: darkred;
+    color: antiquewhite;
+    font-size: 1.8rem;
+    padding: 0.5rem;
+    width: 23vw;
+}
+

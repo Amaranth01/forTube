@@ -1,0 +1,15 @@
+#contentUpload, #contentUpload > form{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin-top: 0.5rem;
+}
+
+label {
+    margin-top: 0.8rem;
+}
+
+input {
+    margin-top: 0.5rem;
+}

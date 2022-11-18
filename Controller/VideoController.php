@@ -4,7 +4,6 @@ namespace App\Controller;
 
 
 use App\Model\Entity\Video;
-use App\Model\Manager\CategoryManager;
 use App\Model\Manager\CommentManager;
 use App\Model\Manager\VideoManager;
 use Exception;
@@ -37,7 +36,6 @@ class VideoController extends AbstractController
         //Retrieves and cleans form fields
         $title = $this->clean($this->getFormField('title'));
         $description = $this->clean($this->getFormField('description'));
-        $category = CategoryManager::getAllCategoriesByName($_POST['category']);
 
         //Checking if the writer is logged in
         $user = self::getConnectedUser();
@@ -49,7 +47,6 @@ class VideoController extends AbstractController
             ->setDescription($description)
             ->setImage($this->addImage())
             ->setUser($user)
-            ->setCategory($category)
         ;
 
         //Add the article
@@ -181,8 +178,6 @@ class VideoController extends AbstractController
             $_SESSION['errors'] = "Veuillez vous connecter pour poster une video";
             $this->render('home/index', [
                 'video' => VideoManager::findVideo(4),
-                'sectionTwo' => VideoManager::getVideoByCategoryId(2),
-                'sectionFive' => VideoManager::getVideoByCategoryId(5),
             ]);
         }
 
@@ -190,8 +185,6 @@ class VideoController extends AbstractController
         if(!isset($_POST['title'])&& !isset($_POST['content'])) {
             $this->render('home/index', [
                 'video' => VideoManager::findVideo(4),
-                'sectionTwo' => VideoManager::getVideoByCategoryId(2),
-                'sectionFive' => VideoManager::getVideoByCategoryId(5),
             ]);
         }
         //Cleans up data
@@ -215,8 +208,6 @@ class VideoController extends AbstractController
             $_SESSION['errors'] = "Seul un rédacteur peut supprimer un article";
             $this->render('home/index', [
                 'video' => VideoManager::findVideo(),
-                'sectionTwo' => VideoManager::getVideoByCategoryId(2),
-                'sectionFive' => VideoManager::getVideoByCategoryId(5),
             ]);
         }
         //verify who is connected
@@ -224,8 +215,6 @@ class VideoController extends AbstractController
             $_SESSION['errors'] = "Seul l'utilisateur propriétaire de la video peut la supprimer";
             $this->render('home/index', [
                 'video' => VideoManager::findVideo(),
-                'sectionTwo' => VideoManager::getVideoByCategoryId(2),
-                'sectionFive' => VideoManager::getVideoByCategoryId(5),
             ]);
         }
         if (self::userConnected()) {
@@ -237,5 +226,4 @@ class VideoController extends AbstractController
             }
         }
     }
-
 }

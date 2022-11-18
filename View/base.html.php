@@ -7,6 +7,9 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>ForTube</title>
     <link rel="stylesheet" href="/assets/css/menu.css">
+    <link rel="stylesheet" href="/assets/css/page.css">
+    <link rel="stylesheet" href="/assets/css/personalSpace.css">
+    <link rel="stylesheet" href="/assets/css/upload.css">
 </head>
 <body>
 <?php
@@ -33,27 +36,20 @@ if (isset($_SESSION['success'])) {
         <?= $success ?>
     </div> <?php
 }
-
-var_dump($_SESSION['user']);
-
 ?>
 <div id="menu">
-    <h1 id="titleSite">ForTube</h1>
-
-    <div id="category">
-        <ul>
-            <a href=""><li>Tous</li></a>
-            <a href=""><li>Jeux vidéos</li></a>
-            <a href=""><li>Animaux</li></a>
-            <a href=""><li>Musique</li></a>
-            <a href=""><li>Vie locale</li></a>
-            <a href=""><li>Manga / animé</li></a>
-        </ul>
-    </div>
+    <h1 id="titleSite"><a href="/index.php?c=home&a=index">ForTube</a></h1>
 
     <div>
-        <a href="/index.php?c=home&a=connexion">Connexion</a>
-        <a href="/index.php?c=user&a=user-space">Espace personnel</a>
+        <?php if(UserController::userConnected()) { ?>
+            <a href="/index.php?c=user&a=user-space">Espace personnel</a>
+        <?php
+        } else { ?>
+            <a href="/index.php?c=home&a=connexion">Connexion</a>
+        <?php }
+        ?>
+
+
     </div>
 </div>
 

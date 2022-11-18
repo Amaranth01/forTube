@@ -14,14 +14,14 @@ class UserController extends AbstractController
     public function index()
     {
         $this->render('home/index', [
-            'article' => VideoManager::findVideo(4),
-            'sectionTwo' => VideoManager::getVideoByCategoryId(2),
-            'sectionFive' => VideoManager::getVideoByCategoryId(5),
+            'video' => VideoManager::findVideo(4),
         ]);
     }
 
     public function userSpace() {
-        $this->render('user/userSpace');
+        $this->render('user/userSpace', [
+            'video' => VideoManager::findVideo(0),
+        ]);
     }
 
     /**

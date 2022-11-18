@@ -47,33 +47,14 @@ class VideoManager
     }
 
     /**
-     * Count the article for pagination
-     * @return mixed
-     */
-    public static function countVideo() {
-        $stmt = DB::getPDO()->query("SELECT COUNT(*) FROM video");
-        return $stmt->fetch()['COUNT(*)'];
-    }
-
-    /**
-     * Count the article by section for the pagination
-     * @param $id
-     * @return mixed
-     */
-    public static function countArticleByCategory($id) {
-        $stmt = DB::getPDO()->query("SELECT COUNT(*) FROM category WHERE id = $id");
-        return $stmt->fetch()['COUNT(*)'];
-    }
-
-    /**
      * Add an article to the DB
      * @param Video $video
      * @return bool
      */
     public static function addVideo(Video $video): bool {
         $stmt= DB::getPDO()->prepare("
-            INSERT INTO video (title, video, description, image, user_id, category_id, date) 
-            VALUES (:title, :video, :description, :image, :user_id, :category_id, :date )
+            INSERT INTO video (title, video, description, image, user_id, date) 
+            VALUES (:title, :video, :description, :image, :user_id, :date )
         ");
 
         $stmt->bindValue(':title', $video->getTitle());
@@ -81,7 +62,6 @@ class VideoManager
         $stmt->bindValue(':description', $video->getDescription());
         $stmt->bindValue(':image', $video->getImage());
         $stmt->bindValue(':user_id', $video->getUser()->getId());
-        $stmt->bindValue(':category_id', $video->getCategory()->getId());
         $stmt->bindValue(':date', (new DateTime())->format('Y-m-d H:i:s'));
 
         $result = $stmt->execute();
@@ -99,36 +79,6 @@ class VideoManager
     {
         $stmt = DB::getPDO()->query("SELECT count(*) FROM video WHERE id = '$id'");
         return $stmt ? $stmt->fetch(): 0;
-    }
-
-    /**
-     *
-     * @param int $id
-     * @param int $limit
-     * @param int $offset
-     * @return array
-     */
-    public static function getVideoByCategoryId(int $id, int $limit = 0, int $offset = 0 ): array
-    {
-        $article = [];
-        if ($limit === 14) {
-            $stmt = DB::getPDO()->query("SELECT * FROM video WHERE category_id = '$id' ORDER BY id DESC 
-                    LIMIT 14 OFFSET $offset
-            ");
-        }
-        $stmt = DB::getPDO()->query("SELECT * FROM video WHERE category_id = '$id' ORDER BY id DESC ");
-
-        if($stmt) {
-            foreach ($stmt->fetchAll() as $data) {
-                $article [] = (new Video())
-                    ->setId($data['id'])
-                    ->setTitle($data['title'])
-                    ->setImage($data['image'])
-                    ->setDescription($data['description'])
-                ;
-            }
-        }
-        return $article;
     }
 
     /**
@@ -163,54 +113,4 @@ class VideoManager
         return false;
     }
 
-    /**
-     * Search an article for the search tool
-     * @param $contentSearch
-     * @return array
-     */
-    public static function searchVideo($contentSearch): array
-    {
-        $article = [];
-        $stmt = DB::getPDO()->prepare("
-            SELECT DISTINCT video.title, video.image, video.resume, video.id FROM category
-                INNER JOIN video ON video = 
-                video.id INNER JOIN category ON category = category.id WHERE 
-                video.title LIKE '%$contentSearch%' OR category.category_name 
-                LIKE '%$contentSearch%' ORDER BY id DESC 
-            ");
-
-        $stmt->execute();
-
-        //Get the requested data in an array
-        foreach ($stmt->fetchAll() as $data) {
-            $article [] = (new Video())
-                ->setTitle($data['title'])
-                ->setDescription($data['description'])
-                ->setImage($data['image'])
-            ;
-        }
-        return $article;
-    }
-
-    /**
-     * Get article after the search
-     * @param $search
-     * @return array
-     */
-    public static function getVideoBySearch($search): array
-    {
-        $article = [];
-        $stmt = DB::getPDO()->prepare(" 
-            SELECT id, title FROM video WHERE title LIKE '%$search%' ORDER BY id DESC LIMIT 6
-        ");
-        $stmt->execute();
-        //Get the requested data in an array
-        foreach ($stmt->fetchAll() as $data) {
-            $article[] = [
-                "id" => $data['id'],
-                "title" => $data['title'],
-            ];
-        }
-        return $article;
-    }
 }

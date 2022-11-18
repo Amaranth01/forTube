@@ -1,0 +1,18 @@
+#contentUserSpace {
+    border: darkred 2px dashed;
+    padding: 0.5rem;
+    margin-top: 1.5rem;
+}
+
+#userSpace {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+
+}
+
+#titleUser {
+    margin-left: 15rem;
+    margin-top: 0.5rem;
+}

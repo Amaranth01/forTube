@@ -8,20 +8,17 @@ html {
     font-size: 65.5%;
 }
 
+body {
+    background-color: lightgrey;
+    font-family: Roboto, sans-serif;
+    font-size: 1.5rem;
+}
+
 #menu {
     display: flex;
     justify-content: space-around;
     align-items: center;
     margin-top: 1rem;
-}
-
-#titleSite {
-    background-color: darkred;
-    font-family: Roboto, sans-serif;
-    color: antiquewhite;
-    font-weight: bold;
-    width: 3.2vw;
-    padding: 0.5rem;
 }
 
 ul {
